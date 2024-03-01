@@ -12,5 +12,5 @@ spec:
     name: mydeployment
   targetCPUUtilizationPercentage: 30
 status:
-  currentReplicas: 0
+  currentReplicas: 1
   desiredReplicas: 0
