@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mydeployment
+  labels:
+    name: mydeployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: myapp
+  template:
+    metadata:
+      name: dpod
+      labels:
+        type: myapp
+    spec:
+      containers:
+        - name: container
+          image: gurukalyan/assesments:latest
+          resources:
+            requests:
+              cpu: 60m
+            limits:
+              cpu: 60m
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                    key: accesskey
+                    name: awskeys
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                    key: secretkey
+                    name: awskeys
+          volumeMounts:
+            - name: index
+              mountPath: /usr/share/nginx/html/
+      volumes:
+        - name: index
+          configMap:
+            name: mycm
